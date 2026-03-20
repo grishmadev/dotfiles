@@ -1,0 +1,40 @@
+-- local lspconfig = require("lspconfig")
+-- local null_ls = require("null-ls") -- for eslint + prettier formatting
+--
+-- -- Setup tsserver (IntelliSense only)
+-- lspconfig.tsserver.setup({
+--   on_attach = function(client, bufnr)
+--     -- Disable formatting in tsserver (let null-ls handle it)
+--     client.server_capabilities.documentFormattingProvider = false
+--
+--     -- Optional keymaps
+--     local opts = { noremap = true, silent = true, buffer = bufnr }
+--     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+--     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+--     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+--   end,
+--   flags = {
+--     debounce_text_changes = 150,
+--   },
+-- })
+--
+-- -- Setup null-ls for prettier + eslint
+-- null_ls.setup({
+--   sources = {
+--     null_ls.builtins.formatting.prettier,
+--     null_ls.builtins.diagnostics.eslint,
+--     null_ls.builtins.code_actions.eslint,
+--   },
+--   on_attach = function(client, bufnr)
+--     if client.supports_method("textDocument/formatting") then
+--       vim.api.nvim_clear_autocmds({ group = 0, buffer = bufnr })
+--       vim.api.nvim_create_autocmd("BufWritePre", {
+--         group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
+--         buffer = bufnr,
+--         callback = function()
+--           vim.lsp.buf.format({ bufnr = bufnr })
+--         end,
+--       })
+--     end
+--   end,
+-- })

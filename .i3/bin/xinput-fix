@@ -1,0 +1,6 @@
+#/bin/sh
+xinput set-prop 'ELAN1300:00 04F3:3087 Touchpad' 'libinput Tapping Enabled' 1
+xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1
+xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 1
+xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Disable While Typing Enabled' 1
+xinput set-prop 'TPPS/2 IBM TrackPoint' 'libinput Accel Speed' 1
