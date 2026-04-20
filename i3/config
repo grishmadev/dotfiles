@@ -194,7 +194,8 @@ mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-i3" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+e mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-i3"
+# bindsym $mod+Shift+e mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-i3"
+bindsym $mod+Shift+e exec ~/.config/rofi/powermenu.sh
 
 # mouse mode
 mode "mouse" {
