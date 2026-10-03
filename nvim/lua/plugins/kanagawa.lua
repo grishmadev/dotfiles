@@ -4,6 +4,11 @@ return {
     "rebelot/kanagawa.nvim",
     lazy = false, -- Load immediately
     priority = 1000, -- Load before other plugins
+    opts = {
+      transparent = true,
+      sidebars = "transparent",
+      floats = "transparent",
+    },
     config = function()
       require("kanagawa").setup({
         compile = false, -- enable compilation
@@ -19,9 +24,9 @@ return {
         dimInactive = false,
         globalStatus = false,
         terminalColors = true,
-        theme = "wave", -- "wave" (default), "dragon" (darker), or "lotus" (light)
+        theme = "dragon", -- "wave" (default), "dragon" (darker), or "lotus" (light)
         background = {
-          dark = "wave",
+          dark = "dragon",
           light = "lotus",
         },
       })

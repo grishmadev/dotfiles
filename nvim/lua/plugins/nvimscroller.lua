@@ -12,8 +12,8 @@ return {
       throttle_ms = 100,
       handle = {
         text = " ",
-        blend = 30, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
-        color = nil,
+        blend = 20, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+        color = "white",
         color_nr = nil, -- cterm
         highlight = "CursorColumn",
         hide_if_all_visible = true, -- Hides handle if all lines are visible
@@ -145,7 +145,7 @@ return {
       handlers = {
         cursor = true,
         diagnostic = true,
-        gitsigns = false, -- Requires gitsigns
+        gitsigns = true, -- Requires gitsigns
         handle = true,
         search = false, -- Requires hlslens
         ale = false, -- Requires ALE
