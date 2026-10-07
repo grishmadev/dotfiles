@@ -1,0 +1,483 @@
+# Sway config (converted from TxGVNN's i3 config)
+# Put this at: ~/.config/sway/config
+# Check for syntax errors with:  sway -C
+# Reload with:                   $mod+Shift+c
+#
+# xprop replacement (find a window's app_id / class):
+#     swaymsg -t get_tree | grep -E 'app_id|class'
+# xmodmap --pke replacement (see key names as you press them):
+#     wev
+
+# Name the workspaces
+# TODO: your icon glyphs were blank in the paste. Put your own set $tagN lines back here.
+set $tag1 1
+set $tag2 2
+set $tag3 3
+set $tag4 4
+set $tag5 5
+set $tag6 6
+set $tag7 7
+set $tag8 8
+set $tag9 9
+set $tag0 0
+
+# Super key
+set $mod Mod4
+
+# Lock command (swaylock replaces i3lock)
+set $lock swaylock -f -c 000000
+
+# Cursor commands for "mouse" mode (replaces xdotool)
+set $cur seat seat0 cursor
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:ZedMono Nerd Font 14
+
+# Borders (sway merges i3's new_window into default_border)
+# hide_edge_borders both
+default_border pixel 2
+default_floating_border pixel 5
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Gap Settings
+gaps inner 20
+gaps outer 5
+
+# Smart Gaps (optional: removes gaps if only one window exists)
+smart_gaps off
+
+bindsym $mod+Ctrl+plus gaps inner current plus 5
+bindsym $mod+Ctrl+minus gaps inner current minus 5
+bindsym $mod+Shift+Ctrl+plus gaps outer current plus 5
+bindsym $mod+Shift+Ctrl+minus gaps outer current minus 5
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start a command launcher (rofi "run" mode replaces dmenu_run)
+bindsym $mod+Shift+d exec rofi -show run
+
+bindsym $mod+d exec rofi -show drun
+default_orientation auto
+
+# Workspace toggle $mod + 'q'
+bindsym $mod+q workspace back_and_forth
+# Border toggle
+bindsym $mod+x border toggle
+
+# change focus
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+h focus left
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# move in right left
+bindsym Mod1+Control+Right workspace next
+bindsym Mod1+Control+Left workspace prev
+
+# move to right left
+bindsym Mod1+Shift+Control+Right move to workspace next
+bindsym Mod1+Shift+Control+Left move to workspace prev
+
+# split in horizontal orientation
+bindsym $mod+semicolon split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+m focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+z focus child
+
+# focus urgent lasted $mod+'='  (keycode 21 = equal)
+bindcode $mod+21 [urgent=latest] focus
+
+# focus follow mouse
+focus_follows_mouse yes
+
+# scratchpad
+bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+minus move scratchpad
+
+# switch to workspace
+bindsym $mod+1 workspace number 1 $tag1
+bindsym $mod+2 workspace number 2 $tag2
+bindsym $mod+3 workspace number 3 $tag3
+bindsym $mod+4 workspace number 4 $tag4
+bindsym $mod+5 workspace number 5 $tag5
+bindsym $mod+6 workspace number 6 $tag6
+bindsym $mod+7 workspace number 7 $tag7
+bindsym $mod+8 workspace number 8 $tag8
+bindsym $mod+9 workspace number 9 $tag9
+bindsym $mod+0 workspace $tag0
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1 $tag1
+bindsym $mod+Shift+2 move container to workspace number 2 $tag2
+bindsym $mod+Shift+3 move container to workspace number 3 $tag3
+bindsym $mod+Shift+4 move container to workspace number 4 $tag4
+bindsym $mod+Shift+5 move container to workspace number 5 $tag5
+bindsym $mod+Shift+6 move container to workspace number 6 $tag6
+bindsym $mod+Shift+7 move container to workspace number 7 $tag7
+bindsym $mod+Shift+8 move container to workspace number 8 $tag8
+bindsym $mod+Shift+9 move container to workspace number 9 $tag9
+bindsym $mod+Shift+0 move container to workspace $tag0
+
+# rename workspace
+# NOTE: these helper scripts call i3-msg/dmenu inside. Port them: i3-msg -> swaymsg, dmenu -> rofi -dmenu
+bindsym $mod+t exec ~/.config/sway/bin/tags num
+bindsym $mod+Shift+t exec ~/.config/sway/bin/tags
+bindsym $mod+n exec ~/.config/sway/bin/tags temp
+bindsym $mod+Shift+n exec ~/.config/sway/bin/tags temp-move
+
+# reminder (i3-input does not exist on Wayland, so rofi -dmenu asks for the seconds)
+bindsym $mod+apostrophe exec sh -c 'd=$(rofi -dmenu -p "Remind after:" </dev/null) && sleep "$d" && notify-send "Remember: $d seconds ago!"'
+
+# [move to] new workspace
+bindsym $mod+i exec sh -c 'swaymsg workspace "$(rofi -dmenu -p "Workspace:" </dev/null)"'
+bindsym $mod+Shift+i exec sh -c 'swaymsg move container to workspace "$(rofi -dmenu -p "Move to workspace:" </dev/null)"'
+
+# mark container
+# bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark name: '
+bindsym $mod+Shift+m exec sh -c 'm=$(rofi -dmenu -p "Go to mark:" </dev/null) && swaymsg "[con_mark=$m] focus"'
+
+# copy to register ($mod+., $mod+Shift+.)  (keycode 60 = period)
+# NOTE: x-register is an X11 script (xdotool/xclip). It needs porting to wl-copy/wtype.
+bindcode $mod+60 exec ~/.config/sway/bin/x-register
+bindcode $mod+Shift+60 exec ~/.config/sway/bin/x-register copy
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 in place: sway has NO restart command, reload is all you need.
+# bindsym $mod+Shift+r restart
+
+# exit sway (logs you out of your session)
+#bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your session.' -B 'Yes, exit sway' 'swaymsg exit'"
+#bindsym $mod+Shift+e exit
+mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-sway" {
+        bindsym l exec $lock; mode "default"
+        bindsym s exec $lock && systemctl suspend; mode "default"
+        bindsym h exec $lock && systemctl hibernate; mode "default"
+        bindsym p exec systemctl poweroff; mode "default"
+        bindsym r exec systemctl reboot; mode "default"
+        bindsym e exec swaymsg exit; mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-sway"
+
+# mouse mode (uses sway's own "seat cursor" command instead of xdotool)
+# Note: sway does not allow a trailing "# comment" after a command, so comments are on their own lines.
+mode "mouse" {
+        # normal
+        bindsym Up $cur move 0 -15
+        bindsym Down $cur move 0 15
+        bindsym Right $cur move 15 0
+        bindsym Left $cur move -15 0
+        bindsym w $cur move 0 -15
+        bindsym x $cur move 0 15
+        bindsym d $cur move 15 0
+        bindsym a $cur move -15 0
+        bindsym q $cur move -15 -15
+        bindsym e $cur move 15 -15
+        bindsym c $cur move 15 15
+        bindsym z $cur move -15 15
+        # faster(x2)
+        bindsym $mod+Up $cur move 0 -30
+        bindsym $mod+Down $cur move 0 30
+        bindsym $mod+Right $cur move 30 0
+        bindsym $mod+Left $cur move -30 0
+        bindsym $mod+w $cur move 0 -30
+        bindsym $mod+x $cur move 0 30
+        bindsym $mod+d $cur move 30 0
+        bindsym $mod+a $cur move -30 0
+        bindsym $mod+q $cur move -30 -30
+        bindsym $mod+e $cur move 30 -30
+        bindsym $mod+c $cur move 30 30
+        bindsym $mod+z $cur move -30 30
+        # slower (1/3 normal)
+        bindsym Control+Up $cur move 0 -5
+        bindsym Control+Down $cur move 0 5
+        bindsym Control+Right $cur move 5 0
+        bindsym Control+Left $cur move -5 0
+        bindsym Control+w $cur move 0 -5
+        bindsym Control+x $cur move 0 5
+        bindsym Control+d $cur move 5 0
+        bindsym Control+a $cur move -5 0
+        bindsym Control+q $cur move -5 -5
+        bindsym Control+e $cur move 5 -5
+        bindsym Control+c $cur move 5 5
+        bindsym Control+z $cur move -5 5
+        # click: s = middle, k = right, j = left (press then release)
+        bindsym s $cur press button2; $cur release button2
+        bindsym k $cur press button3; $cur release button3
+        bindsym j $cur press button1; $cur release button1
+        # wheel: h = up, l = down (scroll buttons only need "press")
+        bindsym h $cur press button4
+        bindsym l $cur press button5
+        # shift + left = mark
+        bindsym Shift+j $cur press button1; $cur release button1
+        # control + left
+        bindsym Control+j $cur press button1; $cur release button1
+        # control + wheel up/down = zoom
+        bindsym Control+h $cur press button4
+        bindsym Control+l $cur press button5
+        # exit mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+g mode "mouse"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Toggle the bar (waybar hides/shows when it gets SIGUSR1)
+bindsym $mod+b exec pkill -SIGUSR1 waybar
+
+# --- Bar -------------------------------------------------------------
+# Option A (active): waybar. Configure it in ~/.config/waybar/config and style.css
+bar {
+    swaybar_command waybar
+}
+
+# Option B (your old i3bar + i3blocks setup, works with swaybar).
+# To use it: comment out the waybar block above and uncomment this one.
+# bar {
+#         status_command i3blocks -c ~/.config/sway/i3blocks.conf
+#         font pango:JetBrainsMono Nerd Font Mono 10
+#         tray_output primary
+#         position top
+#         colors {
+#             background #202020
+#             separator #202020
+#             statusline #88ABC4
+#             focused_workspace  #AAAAAA #000000 #DDDDDD
+#             active_workspace   #000000 #808080 #336633
+#             inactive_workspace #606060 #808080 #000000
+#             urgent_workspace   #AAAAAA #e60000 #ffffff
+#         }
+#         bindsym button1 nop
+#         bindsym button2 nop
+# }
+
+# define color
+set $bg     #2c2c2e
+set $fg     #9f9f9f
+set $hi     #efef8f
+set $ac     #116655
+set $tx     #f1f1f1
+set $ia     #8f8f8f
+set $be     #8faf9f
+set $yw     #f8f893
+set $gn     #88b090
+set $rd     #e89393
+set $id     #1c4a1c
+set $ce     #ceecee
+
+# set some nice colors      border  background  text    indicator  child_border
+client.focused              $id     $ac         $tx     $id        $tx
+client.unfocused            $bg     $bg         $ia     $id
+client.focused_inactive     $bg     $bg         $ac     $id
+client.urgent               $yw     $yw         $tx     $id
+
+# --- Input (replaces xset r rate / xinput-fix / setxkbmap) -----------
+input type:keyboard {
+    # same as: xset r rate 200 100
+    repeat_delay 200
+    repeat_rate 100
+    # xkb_layout us
+    # same as: setxkbmap -option ctrl:nocaps
+    # xkb_options ctrl:nocaps
+}
+
+# I don't know what your xinput-fix script did, so these are common touchpad defaults. Edit to taste.
+input type:touchpad {
+    tap enabled
+    dwt enabled
+}
+
+# --- Start applications ----------------------------------------------
+# exec nm-applet --indicator
+
+# conky draws on X11 by default. Newer conky can do Wayland if its config has: out_to_wayland = true
+# exec conky -d -c ~/.config/sway/conky-right
+# exec conky -d -c ~/.config/sway/conky-left
+# exec conky -d -c ~/.config/sway/conky-bottom
+
+# old ~/.i3/bin/bar script (waybar replaces it)
+# exec ~/.config/sway/bin/bar
+
+exec dunst
+
+# input method (needs GTK_IM_MODULE=ibus, QT_IM_MODULE=ibus, XMODIFIERS=@im=ibus in your environment)
+exec ibus-daemon --xim -d -r
+# Vietnamese "Unikey" engine from the original config. Delete this line if you don't use it.
+exec dconf write /desktop/ibus/general/engines-order "['xkb:us::eng', 'Unikey']"
+
+# auto lock after 5 minutes (swayidle replaces xautolock)
+exec swayidle -w timeout 300 'swaylock -f -c 000000'
+
+# screen warmth + gamma (gammastep replaces redshift and "xrandr --gamma")
+# gammastep needs your location: put lat/lon in ~/.config/gammastep/config.ini or add -l LAT:LON
+exec gammastep -g 0.7
+
+# clipboard manager (cliphist replaces clipmenud)
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+bindsym $mod+Insert exec cliphist list | rofi -dmenu | cliphist decode | wl-copy
+
+# lock screen
+bindsym --release XF86ScreenSaver exec $lock
+bindsym --release $mod+Delete exec $lock
+bindsym --release $mod+Mod1+l exec $lock
+bindsym --release control+Mod1+Delete exec $lock
+
+# Audio controls (amixer works on ALSA/PulseAudio)
+# If it does not change volume on PipeWire, use these instead:
+#   wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+
+#   wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-
+#   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec amixer -q sset Master 3%+
+bindsym XF86AudioLowerVolume exec amixer -q sset Master 3%-
+bindsym XF86AudioMute exec amixer -q sset Master toggle
+
+# Audio Playback
+bindsym $mod+space exec playerctl play-pause
+bindsym $mod+Mod1+Ctrl+l exec playerctl next
+bindsym $mod+Mod1+Ctrl+h exec playerctl previous
+bindsym $mod+Mod1+Ctrl+Right exec playerctl position 5+
+bindsym $mod+Mod1+Ctrl+Left exec playerctl position 5-
+
+# sudo apt install brightnessctl
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# Touchpad controls
+bindsym --release XF86Sleep exec $lock && systemctl suspend
+
+# Screenshot (grim + slurp replace scrot / gnome-screenshot)
+# Print: whole screen, saved to /tmp
+bindsym Print exec grim /tmp/screenshot-$(date +%s).png
+# $mod+Print: drag to select an area, goes to the clipboard
+bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy
+
+# Toggle fastly terminal
+# NOTE: "fn" is a script that probably uses i3-msg/xdotool. It needs porting too.
+bindsym $mod+Escape exec ~/.config/sway/bin/fn esc
+# keycode 49 = grave (the ` key)
+bindcode $mod+49 exec ~/.config/sway/bin/fn 0
+bindsym $mod+F12 exec ~/.config/sway/bin/fn 12
+
+# More workspaces
+bindsym $mod+F1 workspace number 11 F1
+bindsym $mod+F2 workspace number 12 F2
+bindsym $mod+F3 workspace number 13 F3
+bindsym $mod+F4 workspace number 14 F4
+bindsym $mod+F5 workspace number 15 F5
+bindsym $mod+F6 workspace number 16 F6
+bindsym $mod+F7 workspace number 17 F7
+bindsym $mod+F8 workspace number 18 F8
+bindsym $mod+F9 workspace number 19 F9
+bindsym $mod+F10 workspace number 20 F10
+bindsym $mod+F11 workspace number 21 F11
+
+# Media player controls
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioPause exec mpc pause
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+
+# screen off (replaces xset dpms force off; use "dpms off" on sway older than 1.8)
+bindsym XF86Launch1 exec swaymsg "output * power off"
+
+# Assign workspace
+# Wayland apps use app_id, XWayland apps use class. Both are listed to be safe.
+# Verify with: swaymsg -t get_tree | grep -E 'app_id|class'
+assign [app_id="org.keepassxc.KeePassXC"] workspace $tag0
+assign [class="keepassxc"] workspace $tag0
+
+## shortcut
+# neovim (needs a terminal, plain "nvim" has nowhere to draw)
+bindsym $mod+Mod1+i exec kitty nvim
+# keepassx
+bindsym $mod+Mod1+k exec keepassxc
+# email
+bindsym $mod+Mod1+e exec thunderbird
+# browser
+bindsym $mod+Mod1+n exec nyxt
+bindsym $mod+Mod1+b exec firefox -P default
+bindsym $mod+Mod1+Shift+b exec firefox -P default --private-window
+bindsym $mod+Mod1+g exec chromium --temp-profile
+bindsym $mod+Mod1+Shift+g exec chromium --temp-profile --incognito
+# gimp
+bindsym $mod+Mod1+p exec gimp
+# network (wicd is dead and X11-only; nmtui is a simple NetworkManager TUI. Swap for what you use.)
+bindsym $mod+Mod1+w exec kitty nmtui
+# explore (rxvt is X11; ranger inside kitty instead)
+bindsym $mod+Mod1+r exec kitty ranger
+# youtube scratchpad (keycode 90 = numpad 0)
+bindcode $mod+90 [title="YouTube"] scratchpad show
+for_window [title="YouTube"] sticky enable
+
+exec swaymsg workspace number 1 $tag1
+# nitrogen/picom are X11 only. sway draws the wallpaper itself:
+output * bg ~/Pictures/wallpapers/racecar.png fill
+
+# "xset b off" (terminal bell) is not needed, Wayland has no X bell.
