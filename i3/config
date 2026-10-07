@@ -271,25 +271,25 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar
 bindsym $mod+b bar mode toggle
 bar {
-        i3bar_command /usr/bin/i3bar
-        status_command i3blocks -c ~/.i3/i3blocks.conf
-        # status_command i3status -c ~/.i3/i3status.conf
-        # status_command ~/.i3/bin/conky-i3bar
-        font pango:JetBrains Mono 12
-        tray_output primary
-        position top
-        # font pango:Terminus 8
-        colors {
-            background #202020
-            separator #202020
-            statusline #88ABC4
-            focused_workspace  #AAAAAA #000000 #DDDDDD
-            active_workspace   #000000 #808080 #336633
-            inactive_workspace #606060 #808080 #000000
-            urgent_workspace   #AAAAAA #e60000 #ffffff
-        }
-        bindsym button1 nop
-        bindsym button2 nop
+  i3bar_command /usr/bin/i3bar
+  status_command i3blocks -c ~/.i3/i3blocks.conf
+  # status_command i3status -c ~/.i3/i3status.conf
+  # status_command ~/.i3/bin/conky-i3bar
+  font pango:JetBrains Mono 12
+  tray_output primary
+  position top
+  # font pango:Terminus 8
+  colors {
+      background #202020
+      separator #202020
+      statusline #88ABC4
+      focused_workspace  #AAAAAA #000000 #DDDDDD
+      active_workspace   #000000 #808080 #336633
+      inactive_workspace #606060 #808080 #000000
+      urgent_workspace   #AAAAAA #e60000 #ffffff
+  }
+  # bindsym button1 nop
+  # bindsym button2 nop
 }
 # define color
 set $bg     #2c2c2e
