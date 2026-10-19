@@ -10,16 +10,16 @@
 
 # Name the workspaces
 # TODO: your icon glyphs were blank in the paste. Put your own set $tagN lines back here.
-set $tag1 1
-set $tag2 2
-set $tag3 3
-set $tag4 4
-set $tag5 5
-set $tag6 6
-set $tag7 7
-set $tag8 8
-set $tag9 9
-set $tag0 0
+set $tag1 
+set $tag2 
+set $tag3 
+set $tag4 
+set $tag5 
+set $tag6 
+set $tag7 
+set $tag8 
+set $tag9 
+set $tag0 
 
 # Super key
 set $mod Mod4
@@ -61,7 +61,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start a command launcher (rofi "run" mode replaces dmenu_run)
-bindsym $mod+Shift+d exec rofi -show run
+bindsym $mod+Shift+d exec dmenu_run
 
 bindsym $mod+d exec rofi -show drun
 default_orientation auto
@@ -187,7 +187,7 @@ bindcode $mod+60 exec ~/.config/sway/bin/x-register
 bindcode $mod+Shift+60 exec ~/.config/sway/bin/x-register copy
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r reload
 
 # restart i3 in place: sway has NO restart command, reload is all you need.
 # bindsym $mod+Shift+r restart
@@ -478,6 +478,12 @@ for_window [title="YouTube"] sticky enable
 
 exec swaymsg workspace number 1 $tag1
 # nitrogen/picom are X11 only. sway draws the wallpaper itself:
-output * bg ~/Pictures/wallpapers/racecar.png fill
+output * bg ~/Pictures/wallpapers/building.jpg fill
 
 # "xset b off" (terminal bell) is not needed, Wayland has no X bell.
+#
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+corner_radius 10
+# blur 10
+# blur_gradient 20
