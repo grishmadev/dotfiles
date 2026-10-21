@@ -13,6 +13,7 @@ import XMonad.Hooks.ManageDocks (ToggleStruts(..))
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.BinarySpacePartition
+import XMonad.Actions.CycleWS
 import Data.List (isInfixOf)
 
 -- Constants
@@ -78,7 +79,7 @@ myKeys =
     , ("M-d", spawn "rofi -show drun")
     , ("M-S-l", spawn "$HOME/.config/xmonad/scripts/i3lock.sh")
     , ("M-S-d", spawn "dmenu_run")
-    , ("M-f", spawn "wmctrl -r :ACTIVE: -b toggle,fullscreen" >> spawn "polybar-msg cmd toggle")
+    , ("M-f", spawn "wmctrl -r :ACTIVE: -b toggle,fullscreen")
     , ("M-S-r", spawn "xmonad --recompile" >> spawn "xmonad --restart")
     , ("M-S-b", spawn browser)
     , ("M-S-s", spawn "mkdir -p $HOME/Pictures/Screenshots && maim $HOME/Pictures/Screenshots/SS_$(date +%Y%m%d_%H%M%S).png && notify-send \"Screenshot captured\"")
@@ -95,6 +96,8 @@ myKeys =
     , ("M-=", incWindowSpacing 2)
     , ("M--", decWindowSpacing 2)
     , ("M-S-g", toggleWindowSpacingEnabled)
+    , ("C-M1-<Right>", nextWS)
+    , ("C-M1-<Left>",  prevWS)
     ]
 
 myConfig = def
