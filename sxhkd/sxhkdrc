@@ -60,7 +60,7 @@ XF86AudioPlay
     playerctl play-pause
 
 # ---------- Media (keyboard only) ----------
-super + shift + space
+super + space
     playerctl play-pause
 
 super + ctrl + alt + {l,h}
@@ -87,7 +87,7 @@ super + t
     bspc node -t tiled
 
 # Switch between tiled and monocle (one window fills the desktop)
-super + space
+super + shift + space
     bspc desktop -l next
 
 # ---------- Focus and move windows (vim keys) ----------
