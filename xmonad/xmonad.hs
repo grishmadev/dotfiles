@@ -12,6 +12,7 @@ import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.ManageDocks (ToggleStruts(..))
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.BinarySpacePartition
 import Data.List (isInfixOf)
 
 -- Constants
@@ -31,7 +32,7 @@ colPurple = "#bb9af7"
 colRed    = "#f7768e"
 
 -- Layouts
-myLayout = tiled ||| Mirror tiled ||| Full ||| threeCol
+myLayout = emptyBSP ||| tiled ||| Mirror tiled ||| Full ||| threeCol
   where
     threeCol = magnifiercz' 1.3 $ ThreeColMid nmaster delta ratio
     tiled    = Tall nmaster delta ratio
