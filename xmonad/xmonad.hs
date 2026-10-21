@@ -40,15 +40,15 @@ myLayout = tiled ||| Mirror tiled ||| Full ||| threeCol
     delta    = 3/100
 
 -- withEasySB below already adds avoidStruts, so it is not needed here
-myLayoutHook = mkToggle (single NBFULL) $ avoidStruts $ spacingWithEdge 3 $ myLayout
+myLayoutHook = mkToggle (single NBFULL) $ avoidStruts $ spacingWithEdge 10 $ myLayout
 
 -- Bar: short layout name for the status bar
-layoutName :: String -> String
-layoutName l
-    | "Mirror"   `isInfixOf` l = "Wide"
-    | "ThreeCol" `isInfixOf` l = "3Col"
-    | "Full"     `isInfixOf` l = "Full"
-    | otherwise                = "Tall"
+-- layoutName :: String -> String
+-- layoutName l
+--     | "Mirror"   `isInfixOf` l = "Wide"
+--     | "ThreeCol" `isInfixOf` l = "3Col"
+--     | "Full"     `isInfixOf` l = "Full"
+--     | otherwise                = "Tall"
 
 -- myXmobarPP :: PP
 -- myXmobarPP = def
@@ -65,9 +65,8 @@ layoutName l
 
 myStartupHook :: X ()
 myStartupHook = do
-    setDefaultCursor xC_left_ptr
     spawnOnce "picom -b"
-    spawnOnce "pkill polybar && polybar main"
+    spawnOnce "pkill polybar; polybar main"
     spawnOnce "nitrogen --restore"
     spawnOnce "xset r rate 200 100"
     spawnOnce "dunst"
@@ -92,6 +91,9 @@ myKeys =
     , ("M-C-M1-h", spawn "playerctl previous")
     , ("M-C-M1-<Left>", spawn "playerctl position 5-")
     , ("M-C-M1-<Right>", spawn "playerctl position 5+")
+    , ("M-=", incWindowSpacing 2)
+    , ("M--", decWindowSpacing 2)
+    , ("M-S-g", toggleWindowSpacingEnabled)
     ]
 
 myConfig = def

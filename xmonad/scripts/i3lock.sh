@@ -1,5 +1,5 @@
 i3lock \
-  --color=1a1b26ff \
+  --color=1a1b2600 \
   --clock --indicator \
   --time-str="%H:%M" --date-str="%A, %d %B" \
   --time-font="ZedMono Nerd Font Mono" --date-font="ZedMono Nerd Font Mono" \
