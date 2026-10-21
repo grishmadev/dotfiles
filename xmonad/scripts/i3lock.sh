@@ -1,0 +1,15 @@
+i3lock \
+  --color=1a1b26ff \
+  --clock --indicator \
+  --time-str="%H:%M" --date-str="%A, %d %B" \
+  --time-font="ZedMono Nerd Font Mono" --date-font="ZedMono Nerd Font Mono" \
+  --time-size=48 --date-size=16 \
+  --time-color=c0caf5ff --date-color=565f89ff \
+  --radius=180 --ring-width=6 \
+  --inside-color=1a1b2600 --ring-color=3b4261ff \
+  --line-color=00000000 --separator-color=00000000 \
+  --keyhl-color=bb9af7ff --bshl-color=f7768eff \
+  --insidever-color=1a1b2600 --ringver-color=7aa2f7ff \
+  --insidewrong-color=1a1b2600 --ringwrong-color=f7768eff \
+  --verif-text="" --wrong-text="" --noinput-text="" \
+  --verif-color=7aa2f7ff --wrong-color=f7768eff

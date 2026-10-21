@@ -71,10 +71,12 @@ myStartupHook = do
     spawnOnce "nitrogen --restore"
     spawnOnce "xset r rate 200 100"
     spawnOnce "dunst"
+    spawnOnce "xss-lock -- $HOME/.config/xmonad/scripts/i3lock.sh"
 
 myKeys =
     [ ("M-<Return>", spawn term)
     , ("M-d", spawn "rofi -show drun")
+    , ("M-S-l", spawn "$HOME/.config/xmonad/scripts/i3lock.sh")
     , ("M-S-d", spawn "dmenu_run")
     , ("M-f", spawn "wmctrl -r :ACTIVE: -b toggle,fullscreen" >> spawn "polybar-msg cmd toggle")
     , ("M-S-r", spawn "xmonad --recompile" >> spawn "xmonad --restart")
