@@ -7,15 +7,7 @@ Config { overrideRedirect = False
        , borderColor = "#ad8ee6"
        , borderWidth = 2
        , commands =
-            [ Run Weather "VEBD"
-                [ "--template", "<weather> <tempC>°C"
-                , "-L", "15"
-                , "-H", "40"
-                , "--low"   , "lightblue"
-                , "--normal", "#f8f8f2"
-                , "--high"  , "red"
-                ] 36000
-            , Run Cpu
+            [ Run Cpu
                 [ "--template", "CPU <total>%"
                 , "-L", "3"
                 , "-H", "50"
@@ -43,7 +35,7 @@ Config { overrideRedirect = False
                 ] 10
             , Run Swap ["--template", "Swap <usedratio>%"] 10
             , Run DiskU [("/", "Disk <used>/<size>")] [] 20
-            , Run DiskIO [("/", "IO R <read> W <write>")] [] 10
+            -- , Run DiskIO [("/", "IO R <read> W <write>")] [] 10
             , Run Network "wlan0"
                 [ "--template", "↓<rx> ↑<tx> KB/s" ] 10
             , Run Alsa "default" "Master"
@@ -73,5 +65,5 @@ Config { overrideRedirect = False
             ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%media% %XMonadLog% }{ %cpu% %coretemp% | %memory% %swap% | %disku% %diskio% | %wlan0% | %alsa:default:Master% | %battery% | %VEBD% | %date% "
+       , template = "%media% %XMonadLog% }{ %cpu% %coretemp% | %memory% %swap% | %disku% | %wlan0% | %alsa:default:Master% | %battery% | %date% "
        }

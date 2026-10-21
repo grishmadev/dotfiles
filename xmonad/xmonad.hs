@@ -11,6 +11,7 @@ import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.ManageDocks (ToggleStruts(..))
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 import Data.List (isInfixOf)
 
 -- Constants
@@ -39,7 +40,7 @@ myLayout = tiled ||| Mirror tiled ||| Full ||| threeCol
     delta    = 3/100
 
 -- withEasySB below already adds avoidStruts, so it is not needed here
-myLayoutHook = mkToggle (single NBFULL) $ spacingWithEdge 3 $ myLayout
+myLayoutHook = mkToggle (single NBFULL) $ avoidStruts $ spacingWithEdge 3 $ myLayout
 
 -- Bar: short layout name for the status bar
 layoutName :: String -> String
@@ -49,32 +50,34 @@ layoutName l
     | "Full"     `isInfixOf` l = "Full"
     | otherwise                = "Tall"
 
-myXmobarPP :: PP
-myXmobarPP = def
-    { ppSep             = xmobarColor colMuted "" " | "
-    , ppCurrent         = xmobarColor colBlue "" . wrap "[" "]"
-    , ppHidden          = xmobarColor colFgDark ""
-    , ppHiddenNoWindows = xmobarColor colMuted ""
-    , ppUrgent          = xmobarColor colRed "" . wrap "!" "!"
-    , ppLayout          = xmobarColor colPurple "" . layoutName
-    , ppOrder           = \(ws : l : _) -> [ws, l]
-    }
+-- myXmobarPP :: PP
+-- myXmobarPP = def
+--     { ppSep             = xmobarColor colMuted "" " | "
+--     , ppCurrent         = xmobarColor colBlue "" . wrap "[" "]"
+--     , ppHidden          = xmobarColor colFgDark ""
+--     , ppHiddenNoWindows = xmobarColor colMuted ""
+--     , ppUrgent          = xmobarColor colRed "" . wrap "!" "!"
+--     , ppLayout          = xmobarColor colPurple "" . layoutName
+--     , ppOrder           = \(ws : l : _) -> [ws, l]
+--     }
 
-myStatusBar = statusBarProp "xmobar" (pure myXmobarPP)
+-- myStatusBar = statusBarProp "xmobar" (pure myXmobarPP)
 
 myStartupHook :: X ()
 myStartupHook = do
     setDefaultCursor xC_left_ptr
     spawnOnce "picom -b"
+    spawnOnce "pkill polybar && polybar main"
     spawnOnce "nitrogen --restore"
+    spawnOnce "xset r rate 200 100"
     spawnOnce "dunst"
 
 myKeys =
     [ ("M-<Return>", spawn term)
     , ("M-d", spawn "rofi -show drun")
     , ("M-S-d", spawn "dmenu_run")
-    , ("M-f", sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts)
-    , ("M-S-r", spawn "xmonad --recompile && xmonad --restart")
+    , ("M-f", spawn "wmctrl -r :ACTIVE: -b toggle,fullscreen" >> spawn "polybar-msg cmd toggle")
+    , ("M-S-r", spawn "xmonad --recompile" >> spawn "xmonad --restart")
     , ("M-S-b", spawn browser)
     , ("M-S-s", spawn "mkdir -p $HOME/Pictures/Screenshots && maim $HOME/Pictures/Screenshots/SS_$(date +%Y%m%d_%H%M%S).png && notify-send \"Screenshot captured\"")
     , ("M-S-q", kill)
@@ -102,7 +105,7 @@ myConfig = def
 
 main :: IO ()
 main = xmonad
+     . docks
      . ewmhFullscreen
      . ewmh
-     . withEasySB myStatusBar defToggleStrutsKey
      $ myConfig
