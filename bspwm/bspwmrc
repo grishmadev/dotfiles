@@ -1,0 +1,69 @@
+#!/bin/sh
+# ==========================================================
+# bspwmrc: Tokyo Night, low-resource
+# Re-run with: bspc wm -r
+# ==========================================================
+
+# ---------- Helper ----------
+# Start a program only if it isn't already running (safe on reload)
+run() { pgrep -x "$1" >/dev/null || "$@" & }
+
+# ---------- Desktops ----------
+# One monitor, nine desktops (same as xmonad's workspaces).
+# Multi-monitor later: bspc monitor <name> -d 1 2 3 4 5
+bspc monitor -d 1 2 3 4 5 6 7 8 9
+
+# ---------- Layout ----------
+bspc config border_width 3
+bspc config window_gap 10
+bspc config split_ratio 0.50
+bspc config borderless_monocle true       # no border in fullscreen-like monocle
+bspc config gapless_monocle true          # no gaps in monocle layout
+bspc config single_monocle false          # keep gaps/borders for a lone window
+bspc config removal_adjustment true       # rebalance when a window closes
+bspc config initial_polarity second_child # new window opens to the right/below
+
+# ---------- Focus and mouse ----------
+bspc config focus_follows_pointer true
+bspc config pointer_modifier mod4 # Super
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resize_corner
+
+# ---------- Tokyo Night colors ----------
+bspc config normal_border_color "#3b4261"
+bspc config active_border_color "#565f89" # focused window on an unfocused monitor
+bspc config focused_border_color "#bb9af7"
+bspc config presel_feedback_color "#7aa2f7" # the highlight when you preselect a split
+
+# ---------- Window rules ----------
+# Clear old rules first so reloading doesn't stack duplicates
+bspc rule -r "*"
+bspc rule -a Pavucontrol state=floating
+bspc rule -a Blueman-manager state=floating
+bspc rule -a Nm-connection-editor state=floating
+bspc rule -a Screenkey manage=off
+
+# ---------- Autostart ----------
+# Pointer and keyboard
+xsetroot -cursor_name left_ptr
+xset r rate 200 100
+
+# Hotkeys daemon (bspwm has NO keybinds without this)
+run sxhkd
+
+# Compositor, wallpaper, notifications
+run picom -b
+nitrogen --restore &
+run dunst
+
+# Screen lock on suspend and idle
+run xss-lock -- "$HOME/.config/xmonad/scripts/i3lock.sh"
+
+# Bar: kill any old one first. Use ";" not "&&",
+# since pkill fails when nothing is running.
+pkill -x polybar
+polybar main &
+
+# Tray apps (uncomment what you use)
+# run nm-applet

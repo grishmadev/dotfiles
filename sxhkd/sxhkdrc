@@ -1,0 +1,168 @@
+# ==========================================================
+# sxhkdrc: bspwm keybinds, matched to the old xmonad config
+# Syntax: "key combo" on one line, command indented below it.
+# {a,b} expands to two bindings: the first key runs the first
+# command, the second key runs the second. _ means "nothing".
+# ==========================================================
+
+# ---------- Apps ----------
+super + Return
+    kitty
+
+super + d
+    rofi -show drun
+
+super + shift + d
+    dmenu_run
+
+super + shift + b
+    librewolf
+
+# Screenshot (saved in ~/Pictures/Screenshots)
+super + shift + s
+    mkdir -p $HOME/Pictures/Screenshots && maim $HOME/Pictures/Screenshots/SS_$(date +%Y%m%d_%H%M%S).png && notify-send "Screenshot captured"
+
+# ---------- Session ----------
+# Reload bspwm config (same key as your xmonad recompile)
+super + shift + r
+    bspc wm -r
+
+# Reload this file
+super + Escape
+    pkill -USR1 -x sxhkd
+
+# Lock (moved from Shift+L because that is now "swap right")
+super + x
+    $HOME/.config/xmonad/scripts/i3lock.sh
+
+# Power menu
+super + shift + e
+    $HOME/.config/rofi/powermenu.sh
+
+# Quit bspwm (asks no questions, so it is a safe-ish combo)
+super + alt + Escape
+    bspc quit
+
+# ---------- Hardware keys ----------
+XF86MonBrightness{Up,Down}
+    brightnessctl set {+1%,1%-}
+
+XF86AudioRaiseVolume
+    amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+    amixer -q sset Master 3%-
+
+XF86AudioMute
+    amixer -q sset Master toggle
+
+XF86AudioPlay
+    playerctl play-pause
+
+# ---------- Media (keyboard only) ----------
+super + shift + space
+    playerctl play-pause
+
+super + ctrl + alt + {l,h}
+    playerctl {next,previous}
+
+super + ctrl + alt + {Left,Right}
+    playerctl position 5{-,+}
+
+# ---------- Close / state ----------
+# Close window (same as xmonad Mod+Shift+q)
+super + shift + q
+    bspc node -c
+
+# Fullscreen toggle (native, so F11 in the browser works too)
+super + f
+    bspc node -t ~fullscreen
+
+# Toggle floating
+super + shift + f
+    bspc node -t ~floating
+
+# Push a floating window back into tiling (xmonad's Mod+t)
+super + t
+    bspc node -t tiled
+
+# Switch between tiled and monocle (one window fills the desktop)
+super + space
+    bspc desktop -l next
+
+# ---------- Focus and move windows (vim keys) ----------
+# Focus a window in a direction
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+# Swap the focused window with the one in that direction
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+# Next / previous window on this desktop
+super + {_,shift + }Tab
+    bspc node -f {next,prev}.local.!hidden.window
+
+# ---------- Splits (the i3-style part) ----------
+# Preselect where the NEXT window opens, then launch it
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+# Preselect the size of the next split (1 = 10%, 5 = 50% ...)
+super + ctrl + {1-9}
+    bspc node -o 0.{1-9}
+
+# Cancel the preselection on this window
+super + ctrl + space
+    bspc node -p cancel
+
+# Cancel preselections on the whole desktop
+super + ctrl + shift + space
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# Rotate the layout 90 degrees
+super + r
+    bspc node @/ -R 90
+
+# Balance every split to equal sizes
+super + b
+    bspc node @/ -B
+
+# ---------- Resize ----------
+# Grow the window toward a side
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Shrink the window from a side
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move a FLOATING window with the arrow keys
+super + {Left,Down,Up,Right}
+    bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# ---------- Gaps ----------
+# Make the gaps bigger / smaller on the fly
+super + {equal,minus}
+    bspc config window_gap $(( $(bspc config window_gap) {+,-} 2 ))
+
+# ---------- Desktops ----------
+# Go to desktop 1-9
+super + {1-9}
+    bspc desktop -f '^{1-9}'
+
+# Send the focused window to desktop 1-9
+super + shift + {1-9}
+    bspc node -d '^{1-9}'
+
+# Next / previous desktop (your Ctrl+Alt+Arrow keys)
+ctrl + alt + {Right,Left}
+    bspc desktop -f {next,prev}
+
+# Take the window with you to the next / previous desktop
+ctrl + alt + shift + {Right,Left}
+    bspc node -d {next,prev} --follow
+
+# Jump back to the last desktop
+super + grave
+    bspc desktop -f last
