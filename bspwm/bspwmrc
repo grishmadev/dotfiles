@@ -39,6 +39,7 @@ bspc config presel_feedback_color "#7aa2f7" # the highlight when you preselect a
 # ---------- Window rules ----------
 # Clear old rules first so reloading doesn't stack duplicates
 bspc rule -r "*"
+bspc rule -a "Limusic-app:*:Limusic Mini Player" state=floating sticky=on layer=above
 bspc rule -a Pavucontrol state=floating
 bspc rule -a Blueman-manager state=floating
 bspc rule -a Nm-connection-editor state=floating

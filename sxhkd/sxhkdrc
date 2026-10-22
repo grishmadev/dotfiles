@@ -103,6 +103,11 @@ super + shift + {h,j,k,l}
 super + {_,shift + }Tab
     bspc node -f {next,prev}.local.!hidden.window
 
+# Sticky mode
+super + p
+    bspc node -t floating; bspc node -g sticky; bspc node -l above
+
+
 # ---------- Splits (the i3-style part) ----------
 # Preselect where the NEXT window opens, then launch it
 super + ctrl + {h,j,k,l}
